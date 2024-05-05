@@ -1,4 +1,4 @@
-import { verify, sign } from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // Middleware para verificar el token en todas las solicitudes protegidas
@@ -11,7 +11,7 @@ function verifyToken(req, res, next) {
   }
 
   // Verifica el token y lo decodifica
-  verify(token, SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
       res.status(401).json({ error: true, message: "Upss" });
       console.error(err);
@@ -31,7 +31,7 @@ function signToken(username){
   })
 }
 
-export default {
+module.exports = {
   verifyToken,
   signToken
 };

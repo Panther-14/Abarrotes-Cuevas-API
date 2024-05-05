@@ -1,34 +1,33 @@
-import express from 'express';
-import { json } from 'body-parser';
-import cors from 'cors';
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-import { config } from 'dotenv';
-config();
+const cors = require('cors');
+require('dotenv').config({ path: './.env' })
 
-// API Settings
+// Settings
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: ['*'],
+  origin: ['CodeWizards'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Origin'],
 };
 
 // Middleware para analizar las solicitudes con cuerpo JSON
-app.use(json());
+app.use(bodyParser.json());
 app.set('json spaces', 2);
 
 // CORS
 app.use(cors(corsOptions));
 
-//Rutas WEB PAGE
-app.use(express.static('./web/src'));
-app.use(require('./web/web_page.js'));
+//Rutas WEB
+app.use(express.static('./app/src'));
+app.use(require('./app/web_app.js'));
 
 //Rutas Auth - Basic Auth
 app.use('/api/auth', require('./api/services/auth_service.js'));
 
 //Rutas API - Token Auth
-app.use('/api/users', require('./api/services/user_service.js'));
+app.use('/api/admin', require('./api/services/administrador_service.js'));
 
 // Endpoint WildCard
 app.all('*', (req, res) => {

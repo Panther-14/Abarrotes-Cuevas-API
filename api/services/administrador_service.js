@@ -5,13 +5,15 @@ const { verifytoken } = require('../security/tkn_auth.js');
 
 router.use(verifytoken);
 
-//Visualizar pedidos
-router.get('/pedidosasignados', (req, res) => {
+router.put('/registrousuarios', (req, res) => {
     res.json({test: "Hola!!"});
 });
 
-//Confirmar entrega
-router.get('/confirmarentrega', (req, res) => {
+router.put('/registrosucursles',(req, res) => {
+    res.json({test: "Hola!!"});
+});
+
+router.put('/registroproducos',(req, res) => {
     res.json({test: "Hola!!"});
 });
 
