@@ -2,10 +2,8 @@ const { Router } = require("express");
 const router = Router();
 
 const basicAuth = require("../security/bsc_auth");
-const jwt = require("jsonwebtoken");
 const UsuarioBusiness = require("../business/users");
 const { signToken } = require("../security/tkn_auth");
-const SECRET_KEY = process.env.SECRET_KEY;
 
 router.use(basicAuth);
 
@@ -27,24 +25,15 @@ router.post("/login", (req, res) => {
   /*UsuarioBusiness.loginUser(username, password)
     .then((resultados) => {
       console.log("Resultados:", resultados);
-      if (resultados.length > 0) {
-        jwt.sign(
-          { user: { username } },
-          SECRET_KEY,
-          { expiresIn: "1h" },
-          (err, token) => {
-            if (err) {
-              console.error(err);
-              res
-                .status(500)
-                .json({ error: true, message: "Error en el token" });
-              return;
-            }
-            res
-              .status(200)
-              .json({ error: false, token: token, user: resultados[0] });
-          },
-        );
+      if (resultados.modifiedCount > 0) {
+        signToken(username)
+      .then((token) => {
+        res.status(200).json({ error: false, token: token });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: true, message: "Error en el token" });
+      });
       } else {
         res
           .status(401)
@@ -82,17 +71,17 @@ router.put("/signin", (req, res) => {
   UsuarioBusiness.registerUser(usuario)
     .then((resultados) => {
       console.log("Resultados:", resultados);
-      if (resultados.affectedRows > 0) {
+      if (resultados.success == true) {
         res.status(200).json({
           error: false,
           message: "Registro de Usuario exitosa",
-          affectedRows: resultados.affectedRows,
+          resultados: resultados,
         });
       } else {
         res.status(200).json({
           error: false,
           message: "Nada que Actualizar",
-          affectedRows: resultados.affectedRows,
+          resultados: resultados,
         });
       }
     })

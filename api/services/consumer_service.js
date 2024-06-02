@@ -6,6 +6,7 @@ const Direccion = require("../POJO/direccionPOJO.js");
 const Tarjeta = require("../POJO/tarjetaPOJO.js");
 const Carrito = require("../POJO/carritoPOJO.js");
 const { verifyToken } = require("../security/tkn_auth.js");
+const { DateTime } = require("mssql");
 
 router.use(verifyToken);
 
@@ -115,16 +116,42 @@ router.post("/registrarmetodopago", (req, res) => {
         });
 });
 
+router.post("/carrito/agregarproducto", (req, res) => {
+    var idCliente = req.body.idCliente;
+    console.log(idCliente);
+    var producto = req.body.productos[0];
+    console.log(producto);
+
+    ClientesService.agregarProductoCarritoService(idCliente, producto)
+        .then((resultado) => {
+            console.log(resultado);
+            if (resultado.success == true) {
+                res.status(201).json({
+                    error: false,
+                    message: "Registro de producto en carrito exitoso",
+                });
+            } else {
+                res.status(400).json({
+                    error: true,
+                    message: "No se pudo registrar el producto en carrito",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
 //Registro de pedido del consumidor
 router.post("/realizarpedido", (req, res) => {
     var idCliente = req.body.idCliente;
-    carrito = new Carrito();
-    carrito.fechaHoraCreacion = req.body.fechaHoraCreacion;
-    carrito.productos = req.body.productos;
-    carrito.total = req.body.total;
-    carrito.descripcion = req.body.descripcion;
+    var idCarrito = req.body.idCarrito;
 
-    ClientesService.registrarPedidoService(idCliente, carrito)
+    ClientesService.registrarPedidoService(idCliente, idCarrito)
         .then((resultado) => {
             console.log(resultado);
             if (resultado.success == true) {

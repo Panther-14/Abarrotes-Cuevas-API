@@ -89,20 +89,98 @@ async function registrarTarjeta(tarjeta) {
   }
 }
 
-async function registrarPedido(idCliente, carrito) {
+async function agregarProductoCarrito(idCliente, producto) {
   try {
+    var idCarritoGlobal = null;
+    const pool = await poolPromise;
+    const request1 = pool.request();
+    request1.input("IDCliente", sql.Int, idCliente);
+    const result1 = await request1.query(
+      "SELECT IDCarrito FROM Clientes WHERE IDCliente = @IDCliente;",
+    );
+    var idCarritoSQL = result1.recordset[0].IDCarrito;
+
+    const db = await getDb();
+
+    console.log(idCarritoSQL);
+
+    if (idCarritoSQL !== null) {
+      // Ya existe Carrito
+      console.log("Ya existe Carrito");
+      idCarritoGlobal = idCarritoSQL;
+      var carritoActual = await db
+        .collection("Carritos")
+        .findOne({ idCarrito: idCarritoGlobal });
+      carritoActual.productos.push(producto);
+      carritoActual.total += producto.cantidad * producto.precioUnitario;
+      await db.collection("Carritos").updateOne(
+        { idCarrito: idCarritoGlobal },
+        {
+          $set: {
+            productos: carritoActual.productos,
+            total: carritoActual.total,
+          },
+        },
+      );
+      return { success: true };
+    } else {
+      // No existe Carrito
+      console.log("No existe Carrito");
+      const request2 = pool.request();
+      request2.input("IDCliente", sql.Int, idCliente);
+      request2.output("NuevoIDCarrito", sql.UniqueIdentifier);
+      const result2 = await request2.execute("GenerarCarritoCliente");
+      const nuevoIDCarrito = result2.output.NuevoIDCarrito;
+      idCarritoGlobal = nuevoIDCarrito;
+
+      var carrito = {
+        idCarrito: idCarritoGlobal,
+        fechaHoraCreacion: new Date(),
+        productos: [producto],
+        total: producto.cantidad * producto.precioUnitario,
+        descripcion: "Carrito de compras",
+      };
+
+      await db.collection("Carritos").insertOne(carrito);
+      return { success: true };
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+async function registrarPedido(idCliente, idCarrito) {
+  try {
+    const db = getDb();
+    const carrito = await db
+      .collection("Carritos")
+      .findOne({ idCarrito: idCarrito });
+    if (!carrito) {
+      throw new Error("Carrito no encontrado");
+    }
+
     const pool = await poolPromise;
     const request = pool.request();
 
     request.input("IDCliente", sql.Int, idCliente);
-    request.output("NuevoIDCarrito", sql.UniqueIdentifier);
-    const result = await request.execute("GenerarCarritoCliente");
-    const nuevoIDCarrito = result.output.NuevoIDCarrito;
+    request.input("Total", sql.Float, carrito.total);
+    request.output("NuevoIDPedido", sql.Int);
+    const result = await request.execute("GenerarPedidoCliente");
+    const nuevoIDPedido = result.output.NuevoIDPedido;
 
-    carrito.idCarrito = nuevoIDCarrito;
+    const newOrder = {
+      idPedido: nuevoIDPedido,
+      fechaPedido: new Date().toLocaleDateString(),
+      montoTotal: carrito.total,
+      cliente: idCliente,
+      carrito: idCarrito,
+      status: "without validation",
+      deliveryman: 0,
+      productos: carrito.productos,
+    };
 
-    const db = getDb();
-    await db.collection("Carritos").insertOne(carrito);
+    await db.collection("Pedidos").insertOne(newOrder);
+
     return { success: true };
   } catch (err) {
     throw new Error(err);
@@ -139,6 +217,7 @@ module.exports = {
   registrarCliente,
   registrarDireccion,
   registrarTarjeta,
+  agregarProductoCarrito,
   registrarPedido,
   getOrders,
   getOrderDetails,

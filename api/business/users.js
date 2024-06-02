@@ -43,9 +43,19 @@ async function registrarTarjetaService(tarjeta) {
     return err;
   }
 }
-async function registrarPedidoService(idCliente, carrito) {
+
+async function agregarProductoCarritoService(idCliente, producto) {
   try {
-    const resultado = await UserDao.registrarPedido(idCliente, carrito);
+    const resultado = await UserDao.agregarProductoCarrito(idCliente, producto);
+    return resultado;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function registrarPedidoService(idCliente, idCarrito) {
+  try {
+    const resultado = await UserDao.registrarPedido(idCliente, idCarrito);
     return resultado;
   } catch (err) {
     return err;
@@ -75,6 +85,7 @@ module.exports = {
   registrarClienteService,
   registrarDireccionService,
   registrarTarjetaService,
+  agregarProductoCarritoService,
   registrarPedidoService,
   loginUser,
   listOrders,
