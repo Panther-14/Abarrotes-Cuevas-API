@@ -36,8 +36,7 @@ async function registrarReportePedido(reporte){
       .collection("Pedidos")
       .updateOne(
         {idPedido: reporte.idPedido},
-        { $set: { tituloReporteRep: reporte.titulo } },
-        { $set: { descripcionReporteRep: reporte.descripcion } }
+        { $set: { tituloReporteRep: reporte.titulo, descripcionReporteRep: reporte.descripcion } },
         { upsert: false},
       );
     return reporteBD;
