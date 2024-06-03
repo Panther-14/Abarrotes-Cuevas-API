@@ -29,7 +29,25 @@ async function actualizarPedidos(delivery) {
   }
 }
 
+async function registrarReportePedido(reporte){
+  try{
+    const db = getDb();
+    const reporteBD = await db
+      .collection("Pedidos")
+      .updateOne(
+        {idPedido: reporte.idPedido},
+        { $set: { tituloReporteRep: reporte.titulo } },
+        { $set: { descripcionReporteRep: reporte.descripcion } }
+        { upsert: false},
+      );
+    return reporteBD;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 module.exports = {
   getPedidos,
   actualizarPedidos,
+  registrarReportePedido,
 };

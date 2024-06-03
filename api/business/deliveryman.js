@@ -18,7 +18,17 @@ async function updateOrderStatus(delivery) {
   }
 }
 
+async function registrarReportePedidoService(reporte) {
+  try {
+    const resultado = await DeliveryManDAO.registrarReportePedido(reporte);
+    return resultado;
+  } catch (err) {
+    return err;
+  }
+}
+
 module.exports = {
   getOrders,
   updateOrderStatus,
+  registrarReportePedidoService,
 };

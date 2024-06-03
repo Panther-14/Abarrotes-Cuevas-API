@@ -5,6 +5,7 @@ const Cliente = require("../POJO/consumerPOJO.js");
 const Direccion = require("../POJO/direccionPOJO.js");
 const Tarjeta = require("../POJO/tarjetaPOJO.js");
 const Carrito = require("../POJO/carritoPOJO.js");
+const Reporte = require("../POJO/reportePOJO.js");
 const { verifyToken } = require("../security/tkn_auth.js");
 const { DateTime } = require("mssql");
 
@@ -175,6 +176,34 @@ router.post("/realizarpedido", (req, res) => {
         });
 });
 
+router.delete("/cancelarpedido", (req, res) => {
+    var idPedido = req.body.idPedido;
+    ClientesService.cancelarPedidoService(idPedido)
+        .then((resultado) => {
+            console.log("Resultados:", resultados);
+            if (resultados.length > 0) {
+                res.status(200).json({
+                    error: false,
+                    message: "Pedido Cancelado con exito",
+                    resultados: resultados,
+                });
+            } else {
+                res.status(200).json({
+                    error: false,
+                    message: "No se pudo cancelar el pedido",
+                    resultados: resultados,
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
 //Listar pedidos del consumidor (Panther)
 router.get("/listarpedidos", (req, res) => {
     let consumer = {
@@ -238,14 +267,40 @@ router.get("/detallesdepedido/:id", (req, res) => {
         });
 });
 
+router.post("/problemasdepedido", (req, res) => {
+    reporte = new Reporte();
+    reporte.idPedido = req.body.idPedido;
+    reporte.titulo = req.body.tituloReporteCon;
+    reporte.descripcion = req.body.descripcionReporteCon;
+
+    ClientesService.registrarReportePedidoService(reporte)
+        .then((resultado) => {
+            console.log(resultado);
+            if (resultado.success == true) {
+                res.status(201).json({
+                    error: false,
+                    message: "Registro de reporte exitoso",
+                });
+            } else {
+                res.status(400).json({
+                    error: true,
+                    message: "No se pudo registrar el reporte",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
 //Cancelar pedido del consumidor
 router.get("/cancelarpedido", (req, res) => {
     res.json({ test: "Hola!!" });
 });
 
-//Reportar problema con pedido del consumidor
-router.get("/problemasdepedido", (req, res) => {
-    res.json({ test: "Hola!!" });
-});
 
 module.exports = router;

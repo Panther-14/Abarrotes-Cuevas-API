@@ -3,6 +3,7 @@ const { poolPromise } = require("./db_connection");
 const { getDb } = require("../data/mongo_connection");
 const direccionPOJO = require("../POJO/direccionPOJO");
 const tarjetaPOJO = require("../POJO/tarjetaPOJO");
+const reportePOJO = require("../POJO/reportePOJO");
 
 async function registrarCliente(cliente) {
   try {
@@ -180,10 +181,45 @@ async function registrarPedido(idCliente, idCarrito) {
     };
 
     await db.collection("Pedidos").insertOne(newOrder);
+    await db.collection("Carritos").deleteOne({ idCarrito: idCarrito });
 
     return { success: true };
   } catch (err) {
     throw new Error(err);
+  }
+}
+
+async function cancelarPedido(idPedido) {
+  try {
+    const db = await getDb();
+    const pedido = await db.collection("Pedidos").findOne({ idPedido: idPedido });
+
+    if (!pedido) {
+      throw new Error(`Pedido con id ${idPedido} no encontrado.`);
+    }
+
+    const pool = await poolPromise;
+    const request = pool.request();
+
+    for (let producto of pedido.productos) {
+      var idProducto = producto.idProducto;
+      var unidades = producto.cantidad;
+      request.input("Unidades", sql.Int, unidades);
+      request.input("IDProducto", sql.Int, idProducto);
+      await request.query(
+        "UPDATE Productos SET Unidades = Unidades + @Unidades WHERE IDProducto = @IDProducto;"
+      );
+    }
+
+    await db.collection("Pedidos").updateOne(
+      { idPedido: idPedido },
+      { $set: { status: "canceled" } },
+      { upsert: false }
+    );
+
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
   }
 }
 
@@ -212,6 +248,24 @@ async function getOrderDetails(consumer) {
     throw new Error(err);
   }
 }
+
+async function registrarReportePedido(reporte) {
+  try {
+    const db = getDb();
+    const reporteBD = await db
+      .collection("Pedidos")
+      .updateOne(
+        { idPedido: reporte.idPedido },
+        { $set: { tituloReporteCon: reporte.titulo } },
+        { $set: { descripcionReporteCon: reporte.descripcion } },
+        { upsert: false },
+      );
+    return reporteBD;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 module.exports = {
   getUsers,
   registrarCliente,
@@ -219,6 +273,8 @@ module.exports = {
   registrarTarjeta,
   agregarProductoCarrito,
   registrarPedido,
+  cancelarPedido,
   getOrders,
   getOrderDetails,
+  registrarReportePedido,
 };

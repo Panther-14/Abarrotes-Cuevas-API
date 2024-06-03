@@ -62,6 +62,15 @@ async function registrarPedidoService(idCliente, idCarrito) {
   }
 }
 
+async function cancelarPedidoService(idPedido) {
+  try {
+    const resultado = await UserDao.cancelarPedido(idPedido);
+    return resultado;
+  } catch (err) {
+    return err;
+  }
+}
+
 async function listOrders(consumer) {
   try {
     const pedidos = await UserDao.getOrders(consumer);
@@ -80,6 +89,15 @@ async function getOrderDetails(consumer) {
   }
 }
 
+async function registrarReportePedidoService(reporte) {
+  try {
+    const resultado = await UserDao.registrarReportePedido(reporte);
+    return resultado;
+  } catch (err) {
+    return err;
+  }
+}
+
 module.exports = {
   getAllUsers,
   registrarClienteService,
@@ -87,7 +105,9 @@ module.exports = {
   registrarTarjetaService,
   agregarProductoCarritoService,
   registrarPedidoService,
+  cancelarPedidoService,
   loginUser,
   listOrders,
   getOrderDetails,
+  registrarReportePedidoService,
 };
