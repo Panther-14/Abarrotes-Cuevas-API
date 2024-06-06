@@ -3,6 +3,8 @@ const router = Router();
 
 const basicAuth = require("../security/bsc_auth");
 const UsuarioBusiness = require("../business/users");
+const ClientesService = require("../business/users.js");
+const Cliente = require("../POJO/consumerPOJO.js");
 const { signToken } = require("../security/tkn_auth");
 
 router.use(basicAuth);
@@ -48,46 +50,38 @@ router.post("/login", (req, res) => {
 
 //Registrar
 router.put("/signin", (req, res) => {
-  const {
-    username,
-    nombre,
-    apellidoPaterno,
-    apellidoMaterno,
-    email,
-    password,
-    tipoUsuario,
-  } = req.body;
+  cliente = new Cliente();
+  cliente.user = req.body.User;
+  cliente.password = req.body.Password;
+  cliente.nombres = req.body.Nombres;
+  cliente.apellidoPaterno = req.body.ApellidoPaterno;
+  cliente.apellidoMaterno = req.body.ApellidoMaterno;
+  cliente.diaNacimiento = req.body.DiaNacimiento;
+  cliente.mesNacimiento = req.body.MesNacimiento;
+  cliente.anioNacimiento = req.body.AnioNacimiento;
+  cliente.telefono = req.body.Telefono;
+  cliente.idSucursal = req.body.Sucursal;
 
-  const usuario = {
-    username,
-    email,
-    nombre,
-    apellidoPaterno,
-    apellidoMaterno,
-    password,
-    tipoUsuario,
-  };
-
-  UsuarioBusiness.registerUser(usuario)
+  ClientesService.registrarClienteService(cliente)
     .then((resultados) => {
-      console.log("Resultados:", resultados);
       if (resultados.success == true) {
-        res.status(200).json({
+        res.status(201).json({
           error: false,
-          message: "Registro de Usuario exitosa",
-          resultados: resultados,
+          message: "Registro de cliente exitoso",
         });
       } else {
-        res.status(200).json({
-          error: false,
-          message: "Nada que Actualizar",
-          resultados: resultados,
+        res.status(400).json({
+          error: true,
+          message: "No se pudo registrar el cliente",
         });
       }
     })
     .catch((error) => {
-      console.error("Error en el registro:", error);
-      res.status(500).json({ error: true, message: "Error en el registro" });
+      console.error("Error en el registro: ", error);
+      res.status(500).json({
+        error: true,
+        message: "Error interno en el servidor",
+      });
     });
 });
 

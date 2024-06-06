@@ -11,42 +11,6 @@ const { DateTime } = require("mssql");
 
 router.use(verifyToken);
 
-router.post("/registrarcliente", (req, res) => {
-    cliente = new Cliente();
-    cliente.user = req.body.User;
-    cliente.password = req.body.Password;
-    cliente.nombres = req.body.Nombres;
-    cliente.apellidoPaterno = req.body.ApellidoPaterno;
-    cliente.apellidoMaterno = req.body.ApellidoMaterno;
-    cliente.diaNacimiento = req.body.DiaNacimiento;
-    cliente.mesNacimiento = req.body.MesNacimiento;
-    cliente.anioNacimiento = req.body.AnioNacimiento;
-    cliente.telefono = req.body.Telefono;
-    cliente.idSucursal = req.body.Sucursal;
-
-    ClientesService.registrarClienteService(cliente)
-        .then((resultados) => {
-            if (resultados.success == true) {
-                res.status(201).json({
-                    error: false,
-                    message: "Registro de cliente exitoso",
-                });
-            } else {
-                res.status(400).json({
-                    error: true,
-                    message: "No se pudo registrar el cliente",
-                });
-            }
-        })
-        .catch((error) => {
-            console.error("Error en el registro: ", error);
-            res.status(500).json({
-                error: true,
-                message: "Error interno en el servidor",
-            });
-        });
-});
-
 //Registro de direccion de entrega del consumidor
 router.post("/registrardireccion", (req, res) => {
     direccion = new Direccion();

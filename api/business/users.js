@@ -17,6 +17,7 @@ async function loginUser(user, password) {
     return err;
   }
 }
+
 async function getAllUsers() {
   try {
     const users = await UserDao.getUsers();
