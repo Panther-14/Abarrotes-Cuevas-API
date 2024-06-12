@@ -21,6 +21,11 @@ async function getCategoriasInicioService() {
 async function getProductosService(busqueda, IDCategoria) {
   try {
     const resultados = await ProductsDao.getProductos(busqueda, IDCategoria);
+    resultados.forEach((producto) => {
+      var buffer = Buffer.from(producto.Fotografia);
+      var base64Image = buffer.toString("base64");
+      producto.Fotografia = base64Image;
+    })
     return resultados;
   } catch (err) {
     return err;
