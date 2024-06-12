@@ -13,29 +13,20 @@ router.post("/login", (req, res) => {
   // Obtiene el nombre de usuario y la contraseña del cuerpo de la solicitud
   const { username, password } = req.body;
 
-  if (username == "admin" && password == "admin") {
-    signToken(username)
-      .then((token) => {
-        res.status(200).json({ error: false, token: token });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({ error: true, message: "Error en el token" });
-      });
-  }
-
-  /*UsuarioBusiness.loginUser(username, password)
+  UsuarioBusiness.loginUser(username, password)
     .then((resultados) => {
       console.log("Resultados:", resultados);
-      if (resultados.modifiedCount > 0) {
+      if (resultados.length > 0) {
         signToken(username)
-      .then((token) => {
-        res.status(200).json({ error: false, token: token });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({ error: true, message: "Error en el token" });
-      });
+          .then((token) => {
+            res
+              .status(200)
+              .json({ error: false, token: token, user: resultados[0] });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: true, message: "Error en el token" });
+          });
       } else {
         res
           .status(401)
@@ -45,7 +36,7 @@ router.post("/login", (req, res) => {
     .catch((error) => {
       console.error("Error en el registro:", error);
       res.status(500).json({ error: true, message: "Error al iniciar sesión" });
-    });*/
+    });
 });
 
 //Registrar

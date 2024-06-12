@@ -74,8 +74,34 @@ async function registrarProducto(producto) {
   }
 }
 
+async function getTiposUsuario(){
+  try {
+    const pool = await dbConnection.poolPromise;
+    const result = await pool
+      .request()
+      .query("SELECT * FROM TiposUsuario");
+    return result.recordset;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function getSucursales(){
+  try {
+    const pool = await dbConnection.poolPromise;
+    const result = await pool
+      .request()
+      .query("SELECT * FROM Sucursales");
+    return result.recordset;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 module.exports = {
   registrarUsuario,
   registrarSucursal,
   registrarProducto,
+  getTiposUsuario,
+  getSucursales,
 };

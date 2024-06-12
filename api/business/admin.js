@@ -28,8 +28,28 @@ async function registrarProductoService(producto) {
   }
 }
 
+async function getTiposUsuarioService(){
+  try{
+    const resultados = await AdminDao.getTiposUsuario();
+    return resultados;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function getSucursalesService(){
+  try{
+    const resultados = await AdminDao.getSucursales();
+    return resultados;
+  } catch (err){
+    return err
+  }
+}
+
 module.exports = {
   registrarUsuarioService,
   registrarSucursalService,
   registrarProductoService,
+  getTiposUsuarioService,
+  getSucursalesService,
 };

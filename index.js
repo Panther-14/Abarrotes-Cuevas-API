@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./.env" });
@@ -9,12 +8,14 @@ const PORT = process.env.PORT || 3000;
 const corsOptions = {
   origin: ["MBAPPES"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization", "Origin"],
+  allowedHeaders: ["Content-Type", "Authorization", "Origin", "Access-Control-Allow-Origin"],
 };
 
 // Middleware para analizar las solicitudes con cuerpo JSON
-app.use(bodyParser.json());
+app.use(express.json({ limit: '10mb' })); // Limitar el tamaño de los datos JSON a 10MB
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.set("json spaces", 2);
+
 
 // CORS
 app.use(cors(corsOptions));

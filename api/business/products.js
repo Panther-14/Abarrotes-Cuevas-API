@@ -27,8 +27,18 @@ async function getProductosService(busqueda, IDCategoria) {
   }
 }
 
+async function getProductosPorCategoriaService(IDCategoria) {
+  try {
+    const resultados = await ProductsDao.getProductos(busqueda, IDCategoria);
+    return resultados;
+  } catch (err) {
+    return err;
+  }
+}
+
 module.exports = {
   getProductosInicioService,
   getCategoriasInicioService,
   getProductosService,
+  getProductosPorCategoriaService,
 };

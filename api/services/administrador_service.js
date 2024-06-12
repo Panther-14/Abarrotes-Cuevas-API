@@ -4,7 +4,6 @@ const AdminService = require("../business/admin.js");
 const User = require("../POJO/userPOJO.js");
 const Sucursal = require("../POJO/sucursalPOJO.js");
 const Product = require("../POJO/productPOJO.js");
-const { registrarProducto } = require("../data/admin_dao.js");
 
 const router = Router();
 
@@ -97,6 +96,8 @@ router.post("/registrarproducto", (req, res) => {
     producto.idSucursal = req.body.idSucursal;
     console.log(producto);
 
+    
+    
     AdminService.registrarProductoService(producto)
         .then((resultados) => {
             console.log(resultados);
@@ -116,6 +117,52 @@ router.post("/registrarproducto", (req, res) => {
         })
         .catch((error) => {
             console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
+router.get("/obtenertiposusuario", (req, res) =>{
+    AdminService.getTiposUsuarioService()
+    .then(resultados =>{
+        console.log(resultados);
+        if(resultados.length > 0){
+            res.status(200).json(resultados);
+        } else{
+            res.status(404).json({
+                error: true,
+                message: "No se encontraron tipos de usuario",
+                resultados: resultados.length,
+            });
+        }
+    })
+    .catch(error =>{
+        console.error("Error en la consulta: ", error);
+        res.status(500).json({
+            error: true,
+            message: "Error interno en el servidor",
+        });
+    });
+});
+
+router.get("/obtenersucursales", (req, res) => {
+    AdminService.getSucursalesService()
+        .then(resultados => {
+            console.log(resultados);
+            if (resultados.length > 0) {
+                res.status(200).json(resultados);
+            } else {
+                res.status(404).json({
+                    error: true,
+                    message: "No se encontraron sucursales",
+                    resultados: resultados.length,
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error en la consulta: ", error);
             res.status(500).json({
                 error: true,
                 message: "Error interno en el servidor",

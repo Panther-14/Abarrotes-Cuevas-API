@@ -1,9 +1,6 @@
 const sql = require("mssql");
 const { poolPromise } = require("./db_connection");
 const { getDb } = require("../data/mongo_connection");
-const direccionPOJO = require("../POJO/direccionPOJO");
-const tarjetaPOJO = require("../POJO/tarjetaPOJO");
-const reportePOJO = require("../POJO/reportePOJO");
 
 async function registrarCliente(cliente) {
   try {
@@ -34,8 +31,13 @@ async function registrarCliente(cliente) {
 async function getUsers(username, password) {
   try {
     const pool = await poolPromise;
-    const result = await pool.request();
-    result.query("SELECT * FROM Login WHERE User = ? AND Password = ?;");
+    const request = pool.request();
+
+    request.input("Username", sql.VarChar, username);
+    request.input("Password", sql.VarChar, password);
+    const result = await request.query("EXEC	LoginUser @Username, @Password");
+
+    console.log(result);
     return result.recordset;
   } catch (err) {
     throw new Error(err);
@@ -183,6 +185,12 @@ async function registrarPedido(idCliente, idCarrito) {
     await db.collection("Pedidos").insertOne(newOrder);
     await db.collection("Carritos").deleteOne({ idCarrito: idCarrito });
 
+    for(let i=1; i<=carrito.productos.length; i++){
+      request.input("IDProducto", sql.VarChar, carrito.productos[i-1].idProducto);
+      request.input("Unidades", sql.Int, carrito.produtos[i-1].cantidad);
+      await request.execute("UPDATE Productos SET Unidades = Unidades - @Unidades WHERE IDProducto = @IDProducto;");
+    }
+
     return { success: true };
   } catch (err) {
     throw new Error(err);
@@ -192,7 +200,9 @@ async function registrarPedido(idCliente, idCarrito) {
 async function cancelarPedido(idPedido) {
   try {
     const db = await getDb();
-    const pedido = await db.collection("Pedidos").findOne({ idPedido: idPedido });
+    const pedido = await db
+      .collection("Pedidos")
+      .findOne({ idPedido: idPedido });
 
     if (!pedido) {
       throw new Error(`Pedido con id ${idPedido} no encontrado.`);
@@ -207,15 +217,17 @@ async function cancelarPedido(idPedido) {
       request.input("Unidades", sql.Int, unidades);
       request.input("IDProducto", sql.Int, idProducto);
       await request.query(
-        "UPDATE Productos SET Unidades = Unidades + @Unidades WHERE IDProducto = @IDProducto;"
+        "UPDATE Productos SET Unidades = Unidades + @Unidades WHERE IDProducto = @IDProducto;",
       );
     }
 
-    await db.collection("Pedidos").updateOne(
-      { idPedido: idPedido },
-      { $set: { status: "canceled" } },
-      { upsert: false }
-    );
+    await db
+      .collection("Pedidos")
+      .updateOne(
+        { idPedido: idPedido },
+        { $set: { status: "canceled" } },
+        { upsert: false },
+      );
 
     return { success: true };
   } catch (err) {
