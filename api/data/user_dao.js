@@ -114,8 +114,21 @@ async function agregarProductoCarrito(idCliente, producto) {
       var carritoActual = await db
         .collection("Carritos")
         .findOne({ idCarrito: idCarritoGlobal });
-      carritoActual.productos.push(producto);
-      carritoActual.total += producto.cantidad * producto.precioUnitario;
+
+      const productoExistente = carritoActual.productos.find(
+        (p) => p.id === producto.id,
+      );
+
+      if (productoExistente) {
+        // Si el producto ya existe, incrementar la cantidad
+        productoExistente.cantidad += 1;
+      } else {
+        // Si el producto no existe, agregar al carrito
+        carritoActual.productos.push(producto);
+      }
+
+      carritoActual.total += producto.precioUnitario;
+
       await db.collection("Carritos").updateOne(
         { idCarrito: idCarritoGlobal },
         {
@@ -146,6 +159,80 @@ async function agregarProductoCarrito(idCliente, producto) {
 
       await db.collection("Carritos").insertOne(carrito);
       return { success: true };
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+async function eliminarProductoCarrito(idCliente, idProducto) {
+  try {
+    var idCarritoGlobal = null;
+    const pool = await poolPromise;
+    const request1 = pool.request();
+    request1.input("IDCliente", sql.Int, idCliente);
+    const result1 = await request1.query(
+      "SELECT IDCarrito FROM Clientes WHERE IDCliente = @IDCliente;",
+    );
+    var idCarritoSQL = result1.recordset[0].IDCarrito;
+
+    const db = await getDb();
+
+    console.log(idCarritoSQL);
+
+    if (idCarritoSQL !== null) {
+      // Ya existe Carrito
+      console.log("Ya existe Carrito");
+      console.log(idCarritoSQL);
+      idCarritoGlobal = idCarritoSQL;
+      var carritoActual = await db
+        .collection("Carritos")
+        .findOne({ idCarrito: idCarritoGlobal });
+
+      console.log(carritoActual);
+
+      const index = carritoActual.productos.findIndex(
+        (p) => p.idProducto === idProducto,
+      );
+
+      if (index > -1) {
+        carritoActual.productos[index].cantidad--;
+        carritoActual.total -= carritoActual.productos[index].precioUnitario;
+        if (carritoActual.productos[index].cantidad <= 0) {
+          carritoActual.productos.splice(index, 1);
+        }
+
+        if (carritoActual.productos.length === 0) {
+          // Eliminar el carrito si no hay más productos
+          await db
+            .collection("Carritos")
+            .deleteOne({ idCarrito: idCarritoGlobal });
+          const request2 = pool.request();
+          request2.input("IDCarrito", sql.UniqueIdentifier, idCarritoGlobal);
+          request2.input("IDCliente", sql.Int, idCliente);
+          await request2.query(
+            "UPDATE Clientes SET IDCarrito = NULL WHERE IDCliente = @IDCliente;",
+          );
+        } else {
+          await db.collection("Carritos").updateOne(
+            { idCarrito: idCarritoGlobal },
+            {
+              $set: {
+                productos: carritoActual.productos,
+                total: carritoActual.total,
+              },
+            },
+          );
+        }
+        return { success: true };
+      } else {
+        return {
+          success: false,
+          message: "Producto no encontrado en el carrito",
+        };
+      }
+    } else {
+      return { success: false, message: "No existe Carrito para el cliente" };
     }
   } catch (err) {
     throw new Error(err.message);
@@ -185,10 +272,16 @@ async function registrarPedido(idCliente, idCarrito) {
     await db.collection("Pedidos").insertOne(newOrder);
     await db.collection("Carritos").deleteOne({ idCarrito: idCarrito });
 
-    for(let i=1; i<=carrito.productos.length; i++){
-      request.input("IDProducto", sql.VarChar, carrito.productos[i-1].idProducto);
-      request.input("Unidades", sql.Int, carrito.produtos[i-1].cantidad);
-      await request.execute("UPDATE Productos SET Unidades = Unidades - @Unidades WHERE IDProducto = @IDProducto;");
+    for (let i = 1; i <= carrito.productos.length; i++) {
+      request.input(
+        "IDProducto",
+        sql.VarChar,
+        carrito.productos[i - 1].idProducto,
+      );
+      request.input("Unidades", sql.Int, carrito.produtos[i - 1].cantidad);
+      await request.execute(
+        "UPDATE Productos SET Unidades = Unidades - @Unidades WHERE IDProducto = @IDProducto;",
+      );
     }
 
     return { success: true };
@@ -198,6 +291,7 @@ async function registrarPedido(idCliente, idCarrito) {
 }
 
 async function cancelarPedido(idPedido) {
+  console.log(idPedido);
   try {
     const db = await getDb();
     const pedido = await db
@@ -220,12 +314,12 @@ async function cancelarPedido(idPedido) {
         "UPDATE Productos SET Unidades = Unidades + @Unidades WHERE IDProducto = @IDProducto;",
       );
     }
-
+    
     await db
       .collection("Pedidos")
       .updateOne(
         { idPedido: idPedido },
-        { $set: { status: "canceled" } },
+        { $set: { status: "cancelado" } },
         { upsert: false },
       );
 
@@ -237,6 +331,7 @@ async function cancelarPedido(idPedido) {
 
 async function getOrders(consumer) {
   try {
+    console.log(consumer);
     const db = getDb();
     const pedidos = await db
       .collection("Pedidos")
@@ -284,6 +379,7 @@ module.exports = {
   registrarDireccion,
   registrarTarjeta,
   agregarProductoCarrito,
+  eliminarProductoCarrito,
   registrarPedido,
   cancelarPedido,
   getOrders,

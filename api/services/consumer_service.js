@@ -82,9 +82,9 @@ router.post("/registrarmetodopago", (req, res) => {
 });
 
 router.post("/carrito/agregarproducto", (req, res) => {
-    var idCliente = req.body.idCliente;
+    const idCliente = req.body.IDPersona;
     console.log(idCliente);
-    var producto = req.body.productos[0];
+    const producto = req.body.productos[0];
     console.log(producto);
 
     ClientesService.agregarProductoCarritoService(idCliente, producto)
@@ -104,6 +104,41 @@ router.post("/carrito/agregarproducto", (req, res) => {
         })
         .catch((error) => {
             console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
+router.delete("/carrito/eliminarproducto", (req, res) => {
+    var idCliente = req.body.idCliente;
+    console.log(idCliente);
+    var producto = req.body.productos[0];
+    console.log(producto);
+
+    ClientesService.eliminarProductoCarritoService(
+        idCliente,
+        producto.idProducto,
+    )
+        .then((resultado) => {
+            console.log(resultado);
+            if (resultado.success == true) {
+                res.status(200).json({
+                    error: false,
+                    message: "Eliminación de producto en carrito exitosa",
+                });
+            } else {
+                res.status(400).json({
+                    error: true,
+                    message:
+                        resultado.message ||
+                        "No se pudo eliminar el producto en carrito",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en la eliminación: ", error);
             res.status(500).json({
                 error: true,
                 message: "Error interno en el servidor",
@@ -142,10 +177,11 @@ router.post("/realizarpedido", (req, res) => {
 
 router.delete("/cancelarpedido", (req, res) => {
     var idPedido = req.body.idPedido;
+    console.log(idPedido);
     ClientesService.cancelarPedidoService(idPedido)
-        .then((resultado) => {
+        .then((resultados) => {
             console.log("Resultados:", resultados);
-            if (resultados.length > 0) {
+            if (resultados.success == true) {
                 res.status(200).json({
                     error: false,
                     message: "Pedido Cancelado con exito",
@@ -170,8 +206,9 @@ router.delete("/cancelarpedido", (req, res) => {
 
 //Listar pedidos del consumidor (Panther)
 router.get("/listarpedidos", (req, res) => {
+    const { idCliente } = req.query;
     let consumer = {
-        id: req.body.id,
+        id: parseInt(idCliente),
     };
     ClientesService.listOrders(consumer)
         .then((resultados) => {
@@ -260,11 +297,5 @@ router.post("/problemasdepedido", (req, res) => {
             });
         });
 });
-
-//Cancelar pedido del consumidor
-router.get("/cancelarpedido", (req, res) => {
-    res.json({ test: "Hola!!" });
-});
-
 
 module.exports = router;

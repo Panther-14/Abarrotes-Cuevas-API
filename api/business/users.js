@@ -54,6 +54,18 @@ async function agregarProductoCarritoService(idCliente, producto) {
   }
 }
 
+async function eliminarProductoCarritoService(idCliente, producto) {
+  try {
+    const resultado = await UserDao.eliminarProductoCarrito(
+      idCliente,
+      producto,
+    );
+    return resultado;
+  } catch (err) {
+    return err;
+  }
+}
+
 async function registrarPedidoService(idCliente, idCarrito) {
   try {
     const resultado = await UserDao.registrarPedido(idCliente, idCarrito);
@@ -65,6 +77,7 @@ async function registrarPedidoService(idCliente, idCarrito) {
 
 async function cancelarPedidoService(idPedido) {
   try {
+    console.log(idPedido);
     const resultado = await UserDao.cancelarPedido(idPedido);
     return resultado;
   } catch (err) {
@@ -74,6 +87,7 @@ async function cancelarPedidoService(idPedido) {
 
 async function listOrders(consumer) {
   try {
+    console.log(consumer);
     const pedidos = await UserDao.getOrders(consumer);
     return pedidos;
   } catch (err) {
@@ -105,6 +119,7 @@ module.exports = {
   registrarDireccionService,
   registrarTarjetaService,
   agregarProductoCarritoService,
+  eliminarProductoCarritoService,
   registrarPedidoService,
   cancelarPedidoService,
   loginUser,
