@@ -296,8 +296,9 @@ router.get("/detallesdepedido/:id", (req, res) => {
 router.post("/problemasdepedido", (req, res) => {
     reporte = new Reporte();
     reporte.idPedido = req.body.idPedido;
-    reporte.titulo = req.body.tituloReporteCon;
-    reporte.descripcion = req.body.descripcionReporteCon;
+    reporte.titulo = req.body.titulo;
+    reporte.descripcion = req.body.descripcion;
+    console.log(reporte);
 
     ClientesService.registrarReportePedidoService(reporte)
         .then((resultado) => {

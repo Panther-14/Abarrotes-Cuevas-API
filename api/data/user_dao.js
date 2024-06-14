@@ -400,16 +400,22 @@ async function getOrderDetails(consumer) {
 
 async function registrarReportePedido(reporte) {
   try {
+    console.log(reporte);
     const db = getDb();
-    const reporteBD = await db
-      .collection("Pedidos")
-      .updateOne(
+    console.log("Pedido encontrado: ",await db.collection("Pedidos").findOne({ idPedido: reporte.idPedido }));
+    const result = await db.collection("Pedidos").updateOne(
         { idPedido: reporte.idPedido },
-        { $set: { tituloReporteCon: reporte.titulo } },
-        { $set: { descripcionReporteCon: reporte.descripcion } },
-        { upsert: false },
-      );
-    return reporteBD;
+        {
+            $set: {
+                reporte: {
+                    titulo: reporte.titulo,
+                    descripcion: reporte.descripcion
+                }
+            }
+        },
+        { upsert: false }
+    );
+    return {success: true};
   } catch (err) {
     throw new Error(err);
   }
