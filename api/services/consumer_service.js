@@ -21,6 +21,7 @@ router.post("/registrardireccion", (req, res) => {
     direccion.numInterno = req.body.numInterno;
     direccion.latitud = req.body.latitud;
     direccion.longitud = req.body.longitud;
+    direccion.stringGoogle = req.body.stringGoogle;
 
     ClientesService.registrarDireccionService(direccion)
         .then((resultado) => {
@@ -81,11 +82,37 @@ router.post("/registrarmetodopago", (req, res) => {
         });
 });
 
+router.get("/carrito/consultar", (req, res) => {
+    console.log("Consultar");
+    const {idCliente} = req.query;
+    console.log("Cliente recibido: ", idCliente);
+    ClientesService.consultarCarritoService(idCliente)
+        .then((resultado) => {
+            console.log("Resultado: ", resultado);
+            if (resultado !== null) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(404).json({
+                    error: true,
+                    message: "No se encontraro un carrito para este cliente",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en la consulta: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
 router.post("/carrito/agregarproducto", (req, res) => {
-    const idCliente = req.body.IDPersona;
-    console.log(idCliente);
+    console.log("Agregar");
+    const idCliente = req.body.idCliente;
+    console.log("idCliente: ", idCliente);
     const producto = req.body.productos[0];
-    console.log(producto);
+    console.log("producto: ", producto);
 
     ClientesService.agregarProductoCarritoService(idCliente, producto)
         .then((resultado) => {
@@ -112,15 +139,13 @@ router.post("/carrito/agregarproducto", (req, res) => {
 });
 
 router.delete("/carrito/eliminarproducto", (req, res) => {
+    console.log("Eliminiar");
     var idCliente = req.body.idCliente;
     console.log(idCliente);
     var producto = req.body.productos[0];
     console.log(producto);
 
-    ClientesService.eliminarProductoCarritoService(
-        idCliente,
-        producto.idProducto,
-    )
+    ClientesService.eliminarProductoCarritoService(idCliente, producto)
         .then((resultado) => {
             console.log(resultado);
             if (resultado.success == true) {
@@ -291,6 +316,29 @@ router.post("/problemasdepedido", (req, res) => {
         })
         .catch((error) => {
             console.error("Error en el registro: ", error);
+            res.status(500).json({
+                error: true,
+                message: "Error interno en el servidor",
+            });
+        });
+});
+
+router.get("/obtenerdirecciones", (req, res) => {
+    const { idCliente } = req.query;
+    ClientesService.getDireccionClienteService(idCliente)
+        .then((resultados) => {
+            if (resultados.length > 0) {
+                res.status(200).json(resultados);
+            } else {
+                res.status(404).json({
+                    error: true,
+                    message: "No se encontraron direcciones con ese usuario",
+                    resultados: resultados.length,
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error en la consulta: ", error);
             res.status(500).json({
                 error: true,
                 message: "Error interno en el servidor",

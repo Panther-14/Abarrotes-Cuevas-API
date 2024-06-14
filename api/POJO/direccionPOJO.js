@@ -7,6 +7,7 @@ class direccionPOJO {
     idDireccion,
     idCliente,
     idDireccionPostal,
+    stringGoogle,
   ) {
     this.numExterno = numExterno;
     this.numInterno = numInterno;
@@ -15,6 +16,7 @@ class direccionPOJO {
     this.idDireccion = idDireccion;
     this.idCliente = idCliente;
     this.idDireccionPostal = idDireccionPostal;
+    this.stringGoogle = stringGoogle;
   }
 }
 
