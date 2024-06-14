@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "2a6cac89-2db5-4eb8-831c-05578b22766a",
+		"name": "Login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35403376",
+		"_collection_link": "https://lunar-space-887803.postman.co/workspace/AbarrotesCuevas~2aacfeb4-aa0c-42f8-a964-98f18679d4b2/collection/31157274-2a6cac89-2db5-4eb8-831c-05578b22766a?action=share&source=collection_link&creator=35403376"
+	},
+	"item": [
+		{
+			"name": "auth/logn",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "MBAPPES",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "MBAPPES",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"john_doe\",\r\n  \"password\": \"jd_password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"john_doe\",\r\n  \"password\": \"jd_password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "cliente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"5551122334\",\r\n  \"password\": \"phonePass789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "auth/logn fail",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"john_doe\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "auth/signin",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "MBAPPES",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "MBAPPES",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"User\": \"testuser\",\r\n  \"Password\": \"testpassword\",\r\n  \"Nombres\": \"Juan\",\r\n  \"ApellidoPaterno\": \"Perez\",\r\n  \"ApellidoMaterno\": \"Gomez\",\r\n  \"DiaNacimiento\": 15,\r\n  \"MesNacimiento\": 8,\r\n  \"AnioNacimiento\": 1990,\r\n  \"Telefono\": \"1234567890\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/signin",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "auth/signin",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"User\": \"testuser\",\r\n  \"Password\": \"testpassword\",\r\n  \"Nombres\": \"Juan\",\r\n  \"ApellidoPaterno\": \"Perez\",\r\n  \"ApellidoMaterno\": \"Gomez\",\r\n  \"DiaNacimiento\": 15,\r\n  \"MesNacimiento\": 8,\r\n  \"AnioNacimiento\": 1990,\r\n  \"Telefono\": \"1234567890\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/auth/signin",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

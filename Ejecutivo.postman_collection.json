@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "2a1632d9-b0ee-40fd-9208-8b70be25d978",
+		"name": "Ejecutivo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35403376",
+		"_collection_link": "https://lunar-space-887803.postman.co/workspace/AbarrotesCuevas~2aacfeb4-aa0c-42f8-a964-98f18679d4b2/collection/35403376-2a1632d9-b0ee-40fd-9208-8b70be25d978?action=share&source=collection_link&creator=35403376"
+	},
+	"item": [
+		{
+			"name": "executive/pedidos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/pedidos",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"executive",
+						"pedidos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "executive/pedidos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/pedidos",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"executive",
+								"pedidos"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "executive/validarpedido",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"validated\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/validarpedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"executive",
+						"validarpedido"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "executive/validarpedido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"validated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/validarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"executive",
+								"validarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "executive/produccionpedido",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"sending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/produccionpedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"executive",
+						"produccionpedido"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "executive/produccionpedido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"sending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/produccionpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"executive",
+								"produccionpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "executive/enviarpedido",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"sending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/enviarpedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"executive",
+						"enviarpedido"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "executive/enviarpedido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"sending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/executive/enviarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"executive",
+								"enviarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

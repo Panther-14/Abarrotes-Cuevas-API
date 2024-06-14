@@ -1,0 +1,1406 @@
+{
+	"info": {
+		"_postman_id": "d71a9578-efd5-41f4-8b01-33ba43133ffb",
+		"name": "Cliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35403376",
+		"_collection_link": "https://lunar-space-887803.postman.co/workspace/AbarrotesCuevas~2aacfeb4-aa0c-42f8-a964-98f18679d4b2/collection/31157274-d71a9578-efd5-41f4-8b01-33ba43133ffb?action=share&source=collection_link&creator=35403376"
+	},
+	"item": [
+		{
+			"name": "user/listarpedidos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error field is present and has a boolean value\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.error).to.exist.and.to.be.a('boolean');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the resultados array\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.resultados).to.exist.and.to.be.an('array').that.is.not.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify properties in resultados array\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.resultados).to.be.an('array').that.is.not.empty;",
+							"",
+							"    responseData.resultados.forEach(function(resultado) {",
+							"        pm.expect(resultado.idPedido).to.exist;",
+							"        pm.expect(resultado.fechaPedido).to.exist;",
+							"        pm.expect(resultado.montoTotal).to.exist;",
+							"        pm.expect(resultado.cliente).to.exist;",
+							"        pm.expect(resultado.carrito).to.exist;",
+							"        pm.expect(resultado.status).to.exist;",
+							"        pm.expect(resultado.productos).to.exist;",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4Mjg3MzI0LCJleHAiOjE3MTgzNzM3MjR9.w6aopLe1SrmISW-S1CUm7aAUINmPocPSpWCWL1dGcTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/listarpedidos?idCliente=3",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"listarpedidos"
+					],
+					"query": [
+						{
+							"key": "idCliente",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/listarpedidos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/listarpedidos?idCliente=3",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"listarpedidos"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/detallesdepedido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - error and message\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.error).to.exist;",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Error message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the request URL is correct\", function () {",
+							"    pm.expect(pm.request.url).to.equal(\"https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/detallesdepedido/1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/detallesdepedido/1",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"detallesdepedido",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/detallesdepedido",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/detallesdepedido/1",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"detallesdepedido",
+								"1"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/registardireccion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - error and message\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.have.property('error');",
+							"    pm.expect(responseData).to.have.property('message');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error field should be a boolean\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.error).to.be.a('boolean');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNTAyLCJleHAiOjE3MTcyNzc5MDJ9.aQeaymEF-cVQL3MaN_UE8EoO-fDXzlkpuFt7xaS81rc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idCliente\": 1,\n  \"idDireccionPostal\": 2,\n  \"numExterno\": 3,\n  \"numInterno\": 3,\n  \"latitud\": 3.1,\n  \"longitud\": 3.1,\n  \"stringGoogle\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/registrardireccion",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"registrardireccion"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/registardireccion",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idCliente\": 1,\n  \"idDireccionPostal\": 2,\n  \"numExterno\": 3,\n  \"numInterno\": 3,\n  \"latitud\": 3.1,\n  \"longitud\": 3.1,\n  \"stringGoogle\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/registrardireccion",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"registrardireccion"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/registrarmetodopago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - error and message\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.error).to.exist;",
+							"  pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error field is a boolean\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.error).to.be.a('boolean');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNTAyLCJleHAiOjE3MTcyNzc5MDJ9.aQeaymEF-cVQL3MaN_UE8EoO-fDXzlkpuFt7xaS81rc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idCliente\": 1,\n    \"idBanco\": 1,\n    \"nombreTitular\": \"Juan\",\n    \"numeroTarjeta\": 123,\n    \"mesVencimiento\": 1,\n    \"anioVencimiento\": 2024\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/registrarmetodopago",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"registrarmetodopago"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/registrarmetodopago",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idCliente\": 1,\n    \"idBanco\": 1,\n    \"nombreTitular\": \"Juan\",\n    \"numeroTarjeta\": 123,\n    \"mesVencimiento\": 1,\n    \"anioVencimiento\": 2024\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/registrarmetodopago",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"registrarmetodopago"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/realizarpedido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 401\", function () {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - error and message\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('error');",
+							"    pm.expect(responseData.error).to.exist;",
+							"    pm.expect(responseData).to.have.property('message');",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Error message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error field is boolean\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.error).to.be.a('boolean');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiNTU1MTEyMjMzNCJ9LCJpYXQiOjE3MTgzNzMwOTEsImV4cCI6MTcxODQ1OTQ5MX0.M6nzJi98dqATqzuCaK5DGcrjCILKXpQn6K_ZtVfBnyg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCliente\": 7,\r\n    \"idCarrito\": \"A1BFBAC4-A877-4FBB-A46A-7F62384403A6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/realizarpedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"realizarpedido"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/realizarpedido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": 7,\r\n    \"idCarrito\": \"A1BFBAC4-A877-4FBB-A46A-7F62384403A6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/realizarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"realizarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "user/realizarpedido fail",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": 7,\r\n    \"idCarrito\": \"A1BFBAC4-A877-4FBB46A-7F62384403A6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/realizarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"realizarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/carrito/agregarproducto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"  pm.expect(pm.response.code).to.equal(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - error and message\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('error');",
+							"    pm.expect(responseData).to.have.property('message');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error is a boolean value\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.error).to.be.a('boolean');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4MzE5Mjg3LCJleHAiOjE3MTg0MDU2ODd9.2vW1rlu0vvObHwkLpirFQMzai9uAEs_sVchOQTGU3X4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCliente\": \"1\",\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": \"0750107111230\",\r\n            \"cantidad\": 1,\r\n            \"precioUnitario\": 65.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/agregarproducto",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"carrito",
+						"agregarproducto"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/carrito/agregarproducto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": \"1\",\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": \"0750107112210\",\r\n            \"cantidad\": 1,\r\n            \"precioUnitario\": 30.0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/agregarproducto",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"carrito",
+								"agregarproducto"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/carrito/eliminarproducto",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4MzM4NjAxLCJleHAiOjE3MTg0MjUwMDF9.L2bb2x9Ks5rGYu7Cjj-TeJ9Lxo4zA7EXnRU-MV5LmoY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCliente\": \"1\",\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": \"0750107112210\",\r\n            \"cantidad\": 1,\r\n            \"precioUnitario\": 30.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/eliminarproducto",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"carrito",
+						"eliminarproducto"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/carrito/eliminarproducto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": \"1\",\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": \"0750107112210\",\r\n            \"cantidad\": 1,\r\n            \"precioUnitario\": 30.0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/eliminarproducto",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"carrito",
+								"eliminarproducto"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "user/carrito/eliminarproducto fail",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": \"1\",\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": \"70107112210\",\r\n            \"cantidad\": 1,\r\n            \"precioUnitario\": 30.0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/eliminarproducto",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"carrito",
+								"eliminarproducto"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/cancelarpedido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error field is present and has a boolean value\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.have.property('error').that.is.a('boolean');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field is present and non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.have.property('message').that.is.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Resultados field is present and is an empty object\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.resultados).to.exist.and.to.be.an('object').and.to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPedido\": 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/cancelarpedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"cancelarpedido"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/cancelarpedido",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPedido\": 17\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/cancelarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"cancelarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "user/cancelarpedido fail",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPedido\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/cancelarpedido",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"cancelarpedido"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/getdirecciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    ",
+							"    responseData.forEach(function(address) {",
+							"        pm.expect(address.IDDireccion).to.exist;",
+							"        pm.expect(address.NumExterno).to.exist;",
+							"        pm.expect(address.Latitud).to.exist;",
+							"        pm.expect(address.Longitud).to.exist;",
+							"        pm.expect(address.IDCliente).to.exist;",
+							"        pm.expect(address.IDDireccionPostal).to.exist;",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"NumExterno is a non-negative integer\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(address){",
+							"        pm.expect(address.NumExterno).to.be.a('number');",
+							"        pm.expect(address.NumExterno).to.be.at.least(0, \"NumExterno should be non-negative\");",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Latitud is a non-negative integer\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(address){",
+							"        pm.expect(address.Latitud).to.be.a('number');",
+							"        pm.expect(address.Latitud).to.be.at.least(0, \"Latitud should be non-negative\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the response is in JSON format\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"StringGoogle field should be null or a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(address) {",
+							"        pm.expect(address.stringGoogle).to.satisfy(function (value) {",
+							"            return value === null || typeof value === 'string';",
+							"        }, \"StringGoogle field should be null or a string\");",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4MzAwNDkzLCJleHAiOjE3MTgzODY4OTN9.QyhK6u2guyM6qC82D75mSJztLy5NnmRqluDSqGGttwc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/obtenerdirecciones?idCliente=1",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"obtenerdirecciones"
+					],
+					"query": [
+						{
+							"key": "idCliente",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user/getdirecciones",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/obtenerdirecciones?idCliente=1",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"obtenerdirecciones"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "user/getdirecciones fail",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "MBAPPES",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/obtenerdirecciones?idCliente=null",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"user",
+								"obtenerdirecciones"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "null"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/carrito/consultar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4MzE5Mjg3LCJleHAiOjE3MTg0MDU2ODd9.2vW1rlu0vvObHwkLpirFQMzai9uAEs_sVchOQTGU3X4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/carrito/consultar?idCliente=4",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"carrito",
+						"consultar"
+					],
+					"query": [
+						{
+							"key": "idCliente",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/poblemasdepedido",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiam9obl9kb2UifSwiaWF0IjoxNzE4MzQ1NjQ4LCJleHAiOjE3MTg0MzIwNDh9.ZE4YwapuAb_dGvs1uSVBDLgcDbEVLSQN7iqFJrDvPIc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "MBAPPES",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPedido\": 6,\r\n    \"titulo\": \"titulo prueba\",\r\n    \"descripcion\": \"descripcion prueba\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/user/problemasdepedido",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"user",
+						"problemasdepedido"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiNTU1MTEyMjMzNCJ9LCJpYXQiOjE3MTgzNzMwOTEsImV4cCI6MTcxODQ1OTQ5MX0.M6nzJi98dqATqzuCaK5DGcrjCILKXpQn6K_ZtVfBnyg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "2b2bcbb4-67a8-4587-80c8-e5c983a483b4",
+		"name": "Repartidor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35403376",
+		"_collection_link": "https://lunar-space-887803.postman.co/workspace/AbarrotesCuevas~2aacfeb4-aa0c-42f8-a964-98f18679d4b2/collection/35403376-2b2bcbb4-67a8-4587-80c8-e5c983a483b4?action=share&source=collection_link&creator=35403376"
+	},
+	"item": [
+		{
+			"name": "deliveryman/confirmarentrega",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"delivered\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/deliveryman/confirmarentrega",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"deliveryman",
+						"confirmarentrega"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "deliveryman/confirmarentrega",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"delivered\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/deliveryman/confirmarentrega",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"deliveryman",
+								"confirmarentrega"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "deliveryman/pedidosasignados",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"status\": \"sending\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/deliveryman/pedidosasignados",
+					"protocol": "https",
+					"host": [
+						"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+						"riker",
+						"replit",
+						"dev"
+					],
+					"path": [
+						"api",
+						"deliveryman",
+						"pedidosasignados"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "deliveryman/pedidosasignados",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"status\": \"sending\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k.riker.replit.dev/api/deliveryman/pedidosasignados",
+							"protocol": "https",
+							"host": [
+								"973f29df-328d-4bcf-80f4-60c18a7bfd7a-00-2z1u5ktbg8j3k",
+								"riker",
+								"replit",
+								"dev"
+							],
+							"path": [
+								"api",
+								"deliveryman",
+								"pedidosasignados"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzE3MTkxNjIxLCJleHAiOjE3MTcyNzgwMjF9.2fzTMMAdCa0pVLeK9yqGN-XsuUmEMorvmN3moYZxR4c",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
