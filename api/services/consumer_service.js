@@ -84,7 +84,7 @@ router.post("/registrarmetodopago", (req, res) => {
 
 router.get("/carrito/consultar", (req, res) => {
     console.log("Consultar");
-    const {idCliente} = req.query;
+    const { idCliente } = req.query;
     console.log("Cliente recibido: ", idCliente);
     ClientesService.consultarCarritoService(idCliente)
         .then((resultado) => {
@@ -298,7 +298,7 @@ router.post("/problemasdepedido", (req, res) => {
     reporte.idPedido = req.body.idPedido;
     reporte.titulo = req.body.titulo;
     reporte.descripcion = req.body.descripcion;
-    console.log(reporte);
+    console.log("Reporte", reporte);
 
     ClientesService.registrarReportePedidoService(reporte)
         .then((resultado) => {
